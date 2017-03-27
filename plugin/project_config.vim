@@ -22,9 +22,21 @@ func! FindProjectRoot() abort
     return vsc_dir
 endf
 
-function! OpenProjectConfigFile()
+function! GetProjectConfigFilePath()
 	let project_root = FindProjectRoot()
-	execute("new " .project_root. "/" .g:project_config_filename)
+	return FindProjectRoot() ."/". g:project_config_filename
+endfunction
+
+function! OpenProjectConfigFile()
+	execute("new " .GetProjectConfigFilePath())
+endfunction
+
+function! LoadProjectConfig()
+	let config_file = GetProjectConfigFilePath()
+	if filereadable(config_file)
+		execute("source " .config_file)
+	endif
 endfunction
 
 command! -nargs=0 ProjectConfig call OpenProjectConfigFile()
+execute("autocmd! BufWritePost " .GetProjectConfigFilePath(). " call LoadProjectConfig()")
