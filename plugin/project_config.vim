@@ -38,5 +38,8 @@ function! LoadProjectConfig()
 	endif
 endfunction
 
-command! -nargs=0 ProjectConfig call OpenProjectConfigFile()
+autocmd VimEnter * call LoadProjectConfig()
+
 execute("autocmd! BufWritePost " .GetProjectConfigFilePath(). " call LoadProjectConfig()")
+
+command! -nargs=0 ProjectConfig call OpenProjectConfigFile()
