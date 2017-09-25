@@ -1,7 +1,7 @@
 " Author: Hongbo Liu <hbliu@freewheel.tv>
 " Date: 2017-03-27
 
-let s:vcs_folder = [g:tags4proj_cusproj, '.git', '.hg', '.svn', '.bzr', '_darcs']
+let s:vcs_folder = ['.git', '.hg', '.svn', '.bzr', '_darcs']
 
 let g:project_config_filename = "project_conf.vim"
 
@@ -17,13 +17,10 @@ func! FindProjectRoot() abort
 		if !empty(vsc_dir) | break | endif
     endfo
 
-    " let root = fnamemodify(vsc_dir, ':p')
-
     return vsc_dir
 endf
 
 function! GetProjectConfigFilePath()
-	let project_root = FindProjectRoot()
 	return FindProjectRoot() ."/". g:project_config_filename
 endfunction
 
@@ -34,6 +31,7 @@ endfunction
 function! LoadProjectConfig()
 	let config_file = GetProjectConfigFilePath()
 	if filereadable(config_file)
+		let g:project_root = "/" . join(split(config_file, '/')[0:-3], '/')
 		execute("source " .config_file)
 	endif
 endfunction
