@@ -21,7 +21,21 @@ func! FindProjectRoot() abort
 endf
 
 function! GetProjectConfigFilePath()
-    return FindProjectRoot() . g:project_config_filename
+    let root = FindProjectRoot()
+    let possible_files = [
+                \ root . '../.' . g:project_config_filename,
+                \ root .'../'. g:project_config_filename,
+                \ root .'.'. g:project_config_filename,
+                \ root . g:project_config_filename
+                \ ]
+
+    for file in possible_files
+        if filereadable(file)
+            return file
+        endif
+    endfor
+
+    return root . g:project_config_filename
 endfunction
 
 function! OpenProjectConfigFile()
