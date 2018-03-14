@@ -31,11 +31,11 @@ function! GetProjectConfigFilePath()
 
     for file in possible_files
         if filereadable(file)
-            return file
+            return fnamemodify(file, ":p")
         endif
     endfor
 
-    return root . g:project_config_filename
+    return fnamemodify(root . g:project_config_filename, ":p")
 endfunction
 
 function! OpenProjectConfigFile()
