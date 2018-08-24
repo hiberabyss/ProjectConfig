@@ -1,7 +1,7 @@
 " Author: Hongbo Liu <hbliu@freewheel.tv>
 " Date: 2017-03-27
 
-let s:vcs_folder = ['.git', '.hg', '.svn', '.bzr', '_darcs', '.proj']
+let s:vcs_folder = ['.git', 'BLADE_ROOT', '.hg', '.svn', '.bzr', '_darcs', '.proj']
 
 let g:project_config_filename = "project_conf.vim"
 
@@ -12,6 +12,15 @@ func! FindProjectRoot() abort
     for d in s:searchdir
         for vcs in s:vcs_folder
             let vsc_dir = finddir(vcs, d .';')
+            if empty(vsc_dir)
+                let vsc_dir = findfile(vcs, d .';')
+                if !empty(vsc_dir)
+                    let vsc_dir = fnamemodify(vsc_dir, ":p:h")
+                    if isdirectory(vsc_dir . "/.svn")
+                        let vsc_dir = vsc_dir . "/.svn"
+                    endif
+                endif
+            endif
             if !empty(vsc_dir) | break | endif
         endfor
         if !empty(vsc_dir) | break | endif
