@@ -1,7 +1,7 @@
 " Author: Hongbo Liu <hbliu@freewheel.tv>
 " Date: 2017-03-27
 
-let s:vcs_folder = ['.git', 'BLADE_ROOT', '.hg', '.svn', '.bzr', '_darcs', '.proj']
+let s:vcs_folder = ['BLADE_ROOT', '.git', '.hg', '.svn', '.bzr', '_darcs', '.proj']
 
 let g:project_config_filename = "project_conf.vim"
 
