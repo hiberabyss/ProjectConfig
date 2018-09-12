@@ -1,7 +1,7 @@
 " Author: Hongbo Liu <hbliu@freewheel.tv>
 " Date: 2017-03-27
 
-let s:vcs_folder = ['BLADE_ROOT', '.git', '.hg', '.svn', '.bzr', '_darcs', '.proj']
+let s:vcs_folder = ['BLADE_ROOT', '.proj', '.git', '.hg', '.svn', '.bzr', '_darcs']
 
 let g:project_config_filename = "project_conf.vim"
 
@@ -61,6 +61,6 @@ endfunction
 
 autocmd VimEnter * call LoadProjectConfig()
 
-execute("autocmd! BufWritePost " .GetProjectConfigFilePath(). " call LoadProjectConfig()")
+execute("autocmd BufWritePost " .GetProjectConfigFilePath(). " call LoadProjectConfig()")
 
 command! -nargs=0 ProjectConfig call OpenProjectConfigFile()
