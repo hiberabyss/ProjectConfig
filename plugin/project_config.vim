@@ -4,6 +4,7 @@
 let g:project_config_filename = 'project_conf.vim'
 
 let s:vcs_folder = ['.proj', 'BLADE_ROOT', '.git', '.hg', '.svn', '.bzr', '_darcs', g:project_config_filename]
+let s:root = ''
 
 func! FindProjectRoot() abort
   let s:searchdir = [expand('%:p:h'), getcwd()]
@@ -31,6 +32,8 @@ endf
 
 function! GetProjectConfigFilePath()
   let l:root = FindProjectRoot()
+  let s:root = l:root
+
   let l:possible_files = [
         \ l:root . '../.' . g:project_config_filename,
         \ l:root .'../'. g:project_config_filename,
@@ -53,8 +56,9 @@ endfunction
 
 function! LoadProjectConfig()
   let l:config_file = GetProjectConfigFilePath()
+  let g:project_root = '/' . join(split(s:root, '/')[0:-2], '/')
+
   if filereadable(l:config_file)
-    let g:project_root = '/' . join(split(l:config_file, '/')[0:-3], '/')
     execute('source ' .l:config_file)
   endif
 endfunction
