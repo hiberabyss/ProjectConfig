@@ -67,6 +67,11 @@ augroup ProjectConfig
   autocmd VimEnter * call LoadProjectConfig()
 augroup END
 
+if !exists('g:project_push_excludes')
+  let g:project_push_excludes = ['\.git']
+endif
+
 execute('autocmd BufWritePost ' .GetProjectConfigFilePath(). ' call LoadProjectConfig()')
 
 command! -nargs=0 ProjectConfig call OpenProjectConfigFile()
+command! -nargs=+ ProjectPush call project_push#execute(<f-args>)
