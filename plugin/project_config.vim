@@ -30,21 +30,21 @@ func! FindProjectRoot() abort
 endf
 
 function! GetProjectConfigFilePath()
-  let root = FindProjectRoot()
-  let possible_files = [
-        \ root . '../.' . g:project_config_filename,
-        \ root .'../'. g:project_config_filename,
-        \ root .'.'. g:project_config_filename,
-        \ root . g:project_config_filename
+  let l:root = FindProjectRoot()
+  let l:possible_files = [
+        \ l:root . '../.' . g:project_config_filename,
+        \ l:root .'../'. g:project_config_filename,
+        \ l:root .'.'. g:project_config_filename,
+        \ l:root . g:project_config_filename
         \ ]
 
-  for file in possible_files
-    if filereadable(file)
-      return fnamemodify(file, ':p')
+  for l:file in l:possible_files
+    if filereadable(l:file)
+      return fnamemodify(l:file, ':p')
     endif
   endfor
 
-  return fnamemodify(root . g:project_config_filename, ':p')
+  return fnamemodify(l:root . g:project_config_filename, ':p')
 endfunction
 
 function! OpenProjectConfigFile()
@@ -52,14 +52,16 @@ function! OpenProjectConfigFile()
 endfunction
 
 function! LoadProjectConfig()
-  let config_file = GetProjectConfigFilePath()
-  if filereadable(config_file)
-    let g:project_root = '/' . join(split(config_file, '/')[0:-3], '/')
-    execute('source ' .config_file)
+  let l:config_file = GetProjectConfigFilePath()
+  if filereadable(l:config_file)
+    let g:project_root = '/' . join(split(l:config_file, '/')[0:-3], '/')
+    execute('source ' .l:config_file)
   endif
 endfunction
 
-autocmd VimEnter * call LoadProjectConfig()
+augroup ProjectConfig
+  autocmd VimEnter * call LoadProjectConfig()
+augroup END
 
 execute('autocmd BufWritePost ' .GetProjectConfigFilePath(). ' call LoadProjectConfig()')
 
