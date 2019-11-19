@@ -9,7 +9,7 @@ function! project_push#execute(cmd, host, remote_dir)
   endif
 
   let l:filepath = expand('%:p')
-  if !match(l:filepath, g:project_root) < 0
+  if match(l:filepath, g:project_root) < 0
     return
   endif
 
