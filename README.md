@@ -5,3 +5,6 @@ This plugin implements per project vim settings. The settings will be used when 
 This plugin provide one command and one global variable:
 
 - `:ProjectConfig` this command will open the vim setting for this project
+
+# Push Project File
+- `let g:project_push_excludes = ['\.git']` exclude file

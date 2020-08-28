@@ -74,4 +74,4 @@ endif
 execute('autocmd BufWritePost ' .GetProjectConfigFilePath(). ' call LoadProjectConfig()')
 
 command! -nargs=0 ProjectConfig call OpenProjectConfigFile()
-command! -nargs=+ ProjectPush call project_push#execute(<f-args>)
+command! -nargs=* Ppush call project_push#execute(<f-args>)
