@@ -3,7 +3,11 @@
 
 let g:project_config_filename = 'project_conf.vim'
 
-let s:vcs_folder = ['.proj', 'BLADE_ROOT', '.git', '.hg', '.svn', '.bzr', '_darcs', g:project_config_filename]
+let s:vcs_folder = [
+      \ g:project_config_filename,
+      \ '.proj', 'BLADE_ROOT',
+      \ '.git', '.hg', '.svn', '.bzr', '_darcs',
+      \ ]
 let s:root = ''
 
 func! FindProjectRoot() abort
