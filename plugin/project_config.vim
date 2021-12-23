@@ -11,7 +11,7 @@ let s:vcs_folder = [
 let s:root = ''
 
 func! FindProjectRoot() abort
-  let s:searchdir = [expand('%:p:h'), getcwd()]
+  let s:searchdir = [$ORIG_PWD, expand('%:p:h'), getcwd()]
 
   let vsc_dir = ''
   for d in s:searchdir
