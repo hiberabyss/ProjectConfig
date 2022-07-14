@@ -6,7 +6,7 @@ let g:project_config_filename = 'project_conf.vim'
 let s:vcs_folder = [
       \ g:project_config_filename,
       \ '.proj', 'BLADE_ROOT',
-      \ '.git', '.hg', '.svn', '.bzr', '_darcs',
+      \ '.git', '.hg', '.bzr', '_darcs',
       \ ]
 let s:root = ''
 
@@ -17,17 +17,17 @@ func! FindProjectRoot() abort
   for d in s:searchdir
     for vcs in s:vcs_folder
       let vsc_dir = finddir(vcs, d .';')
+
       if empty(vsc_dir)
         let vsc_dir = findfile(vcs, d .';')
         if !empty(vsc_dir)
           let vsc_dir = fnamemodify(vsc_dir, ':p:h')
-          if isdirectory(vsc_dir . '/.svn')
-            let vsc_dir = vsc_dir . '/.svn'
-          endif
         endif
       endif
+
       if !empty(vsc_dir) | break | endif
     endfor
+
     if !empty(vsc_dir) | break | endif
   endfo
 
@@ -39,10 +39,10 @@ function! GetProjectConfigFilePath()
   let s:root = l:root
 
   let l:possible_files = [
-        \ l:root . '../.' . g:project_config_filename,
-        \ l:root .'../'. g:project_config_filename,
         \ l:root .'.'. g:project_config_filename,
-        \ l:root . g:project_config_filename
+        \ l:root . g:project_config_filename,
+        \ l:root .'../.'. g:project_config_filename,
+        \ l:root .'../'. g:project_config_filename,
         \ ]
 
   for l:file in l:possible_files
